@@ -1,0 +1,21 @@
+{
+  "name": "agent-security-stack",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "The open-source agent-security stack — warden + canon + keeper — composed into one layered defense. Part of Own Your Stack.",
+  "scripts": {
+    "demo": "node demo.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@askalf/warden": "github:askalf/warden",
+    "@askalf/canon": "github:askalf/canon",
+    "@askalf/keeper": "github:askalf/keeper"
+  },
+  "keywords": ["ai-agents", "agent-security", "mcp", "own-your-stack", "demo"],
+  "author": "Thomas Sprayberry",
+  "license": "MIT",
+  "repository": "github:askalf/agent-security-stack",
+  "engines": { "node": ">=20" }
+}
