@@ -52,5 +52,11 @@ npm test        # the same composition, as assertions
 
 *vet it (canon) → contain it (warden) → key it never holds (keeper).*
 
+## Beyond the core trio
+
+The trio above guards the **tool-call** path. The same idea — govern the agent, don't trust the surface — extends to other surfaces:
+
+- **[picket](https://github.com/askalf/picket)** — own your agent **browser**: an indirect-prompt-injection firewall + action gate that wraps a CDP browser, so an agent can read a hostile web page without being hijacked by it (the lethal trifecta, delivered by the page). It carries the same spine onto the browser — a warden-style action gate (allowlist + step-up) and keeper-style credential leases filled at the CDP layer, so the agent never holds the secret.
+
 ---
 Part of **[Own Your Stack](https://github.com/askalf)** — own your AI infrastructure instead of renting it. Built by Thomas Sprayberry.
