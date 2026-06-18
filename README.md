@@ -10,7 +10,7 @@ OpenClaw became 2026's first big AI-security disaster three ways at once: one-cl
 | **[canon](https://github.com/askalf/canon)** | agent skills | poisoned / drifted skills & MCP servers | the **supply-chain gate** — which tools may *exist* |
 | **[keeper](https://github.com/askalf/keeper)** | agent secrets | leaked API keys / credentials | the **vault** — a lease, never the key |
 
-They aren't three islands — they share one spine: canon reuses warden's scanner, keeper reuses warden's tamper-evident audit. `npm install` dedupes warden to a single shared copy. The three are **pinned to vetted commits**, so the stack is itself a reproducible supply chain — the thing it's protecting.
+They aren't three islands — they share one spine: canon reuses warden's scanner, keeper reuses warden's tamper-evident audit. `npm install` dedupes warden to a single shared copy.
 
 ## The whole stack in one guarded call
 
@@ -24,16 +24,6 @@ function guardedCall({ tool, action, lease }) {
 ```
 
 A tool call proceeds **only when all three agree**. Flip any one layer to "bad" and the call stops there — `canon` before `warden` before `keeper`.
-
-## Drop in at runtime — no app changes
-
-The `guardedCall` above is the composition in one function; each layer also ships a **drop-in enforcer** so the same defense holds at the process / network boundary with no code changes:
-
-- **`canon-mcp`** — an MCP proxy in front of a server: only pinned, unmodified, unpoisoned tools survive `tools/list`, and a call to anything it dropped is blocked. *Which tools may exist.*
-- **`warden-mcp`** — an MCP proxy that firewalls every `tools/call` (RCE, exfil, SSRF, prompt-injection, and OS-persistence: cron / systemd-user / scheduled-task / WMI / registry-autorun) and strips poisoned tools before the client sees them; optional daemon, native fast hook, and a gray-zone LLM judge that can only *raise* risk. *What a call may do.*
-- **`keeper broker`** — point your API client's base URL at it with no key; for each call it redeems a scoped, single-use lease and injects the real secret at egress, bound to one upstream. *A key the agent never holds.*
-
-Chain them — `client → canon-mcp → warden-mcp → server`, egress through `keeper broker` — and a tool must be **vetted to exist, safe to run, and hold a valid lease to touch a secret**. Same three-way agreement as `guardedCall`, enforced live.
 
 ## Run it
 

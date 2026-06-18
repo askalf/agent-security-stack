@@ -9,9 +9,9 @@
     "test": "node --test"
   },
   "dependencies": {
-    "@askalf/warden": "git+https://github.com/askalf/warden.git#7706a44f5caf6b16e61a2f5163940fee66b5ee60",
-    "@askalf/canon": "git+https://github.com/askalf/canon.git#b24206e7e6e2579afcf83eeffd8fe287386b5061",
-    "@askalf/keeper": "git+https://github.com/askalf/keeper.git#e72f29d26361b65152b4e829c29bcbb849098749"
+    "@askalf/warden": "github:askalf/warden",
+    "@askalf/canon": "github:askalf/canon",
+    "@askalf/keeper": "github:askalf/keeper"
   },
   "keywords": ["ai-agents", "agent-security", "mcp", "own-your-stack", "demo"],
   "author": "Thomas Sprayberry",
