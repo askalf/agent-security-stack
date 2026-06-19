@@ -3,15 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "The open-source agent-security stack — warden + canon + keeper — composed into one layered defense. Part of Own Your Stack.",
+  "description": "The open-source agent-security stack — warden + canon + keeper + cordon + picket — composed into one layered defense, and exposed as a single MCP server. Part of Own Your Stack.",
+  "bin": {
+    "oys-mcp": "./bin/oys-mcp.mjs"
+  },
   "scripts": {
     "demo": "node demo.mjs",
+    "demo:mcp": "node demo/mcp-demo.mjs",
+    "mcp": "node bin/oys-mcp.mjs",
     "test": "node --test"
   },
   "dependencies": {
     "@askalf/warden": "git+https://github.com/askalf/warden.git#7706a44f5caf6b16e61a2f5163940fee66b5ee60",
     "@askalf/canon": "git+https://github.com/askalf/canon.git#b24206e7e6e2579afcf83eeffd8fe287386b5061",
-    "@askalf/keeper": "git+https://github.com/askalf/keeper.git#e72f29d26361b65152b4e829c29bcbb849098749"
+    "@askalf/keeper": "git+https://github.com/askalf/keeper.git#e72f29d26361b65152b4e829c29bcbb849098749",
+    "@askalf/picket": "git+https://github.com/askalf/picket.git#cd81e006d0e306a9ecff835b39ae199e3807200b",
+    "cordon": "git+https://github.com/askalf/cordon.git#677aaafc2619d30fb30fc191bdc993f480d62948",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "tsx": "^4.19.0",
+    "zod": "^3.25.0"
   },
   "keywords": ["ai-agents", "agent-security", "mcp", "own-your-stack", "demo"],
   "author": "Thomas Sprayberry",
