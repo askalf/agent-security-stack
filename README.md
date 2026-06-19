@@ -1,6 +1,6 @@
 # agent-security-stack
 
-> The open-source agent-security stack — **[warden](https://github.com/askalf/warden) · [canon](https://github.com/askalf/canon) · [keeper](https://github.com/askalf/keeper)** — composed into one layered defense. Part of **[Own Your Stack](https://github.com/askalf)**.
+> The open-source agent-security stack — **[warden](https://github.com/askalf/warden) · [canon](https://github.com/askalf/canon) · [keeper](https://github.com/askalf/keeper) · cordon · picket** — composed into one layered defense. Part of **[Own Your Stack](https://github.com/askalf)**.
 
 OpenClaw became 2026's first big AI-security disaster three ways at once: one-click **RCE**, a **poisoned skills** marketplace, and ~135k **leaked credentials**. Three failure modes — three small, open-source, zero-dependency tools that compose into one defense:
 
@@ -52,7 +52,7 @@ The proxies above enforce *mandatorily, in the path*. `oys-mcp` is the complemen
   "mcpServers": {
     "own-your-stack": {
       "command": "npx",
-      "args": ["-y", "agent-security-stack", "oys-mcp"],
+      "args": ["-y", "github:askalf/agent-security-stack", "oys-mcp"],
       "env": {
         "KEEPER_HOME": "/path/to/keeper/vault",
         "PICKET_CDP": "http://127.0.0.1:9222",
@@ -63,6 +63,8 @@ The proxies above enforce *mandatorily, in the path*. `oys-mcp` is the complemen
   }
 }
 ```
+
+> Not yet on npm — installs straight from GitHub.
 
 Each tool wraps the real library (`@askalf/warden`, `@askalf/canon`, `@askalf/keeper`, `@askalf/picket`, cordon's detector) — no reimplementation. `keeper_lease` returns only the lease handle; the secret is materialized at egress, never through the tool. (`warden-mcp` / `canon-mcp` remain the deployment-grade *mandatory* mode.)
 
