@@ -14,8 +14,8 @@
     "test": "node --test"
   },
   "dependencies": {
-    "@askalf/warden": "git+https://github.com/askalf/warden.git#7706a44f5caf6b16e61a2f5163940fee66b5ee60",
-    "@askalf/canon": "git+https://github.com/askalf/canon.git#b24206e7e6e2579afcf83eeffd8fe287386b5061",
+    "@askalf/warden": "git+https://github.com/askalf/warden.git#e6c7988752931291f7fe13c731f0eadf1b11c437",
+    "@askalf/canon": "git+https://github.com/askalf/canon.git#800c010575c2b452d772aec71e74ecad8b013912",
     "@askalf/keeper": "git+https://github.com/askalf/keeper.git#e72f29d26361b65152b4e829c29bcbb849098749",
     "@askalf/picket": "git+https://github.com/askalf/picket.git#cd81e006d0e306a9ecff835b39ae199e3807200b",
     "cordon": "git+https://github.com/askalf/cordon.git#677aaafc2619d30fb30fc191bdc993f480d62948",
