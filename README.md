@@ -35,12 +35,44 @@ The `guardedCall` above is the composition in one function; each layer also ship
 
 Chain them — `client → canon-mcp → warden-mcp → server`, egress through `keeper broker` — and a tool must be **vetted to exist, safe to run, and hold a valid lease to touch a secret**. Same three-way agreement as `guardedCall`, enforced live.
 
+## One MCP server — call the whole stack
+
+The proxies above enforce *mandatorily, in the path*. `oys-mcp` is the complementary **on-demand** surface: one MCP server that hands any client — Claude Desktop, Claude Code, any agent runtime — the whole suite as callable tools, so an agent can ask the stack to vet content, actions, and secrets mid-task.
+
+| tool | layer | does |
+|------|-------|------|
+| `warden_check` | contain | is this `{tool, input}` safe to run? → allow / approve / block + why |
+| `canon_scan` | vet | scan an MCP/skill manifest (JSON) for poisoning → clean / flagged |
+| `keeper_lease` | key | lease a vault secret → an **opaque handle**; the secret never returns |
+| `cordon_redact` | sanitize | strip PII/secrets from text → typed placeholders + tally |
+| `picket_observe` | read | firewall an untrusted web page → safe view, injection withheld |
+
+```json
+{
+  "mcpServers": {
+    "own-your-stack": {
+      "command": "npx",
+      "args": ["-y", "agent-security-stack", "oys-mcp"],
+      "env": {
+        "KEEPER_HOME": "/path/to/keeper/vault",
+        "PICKET_CDP": "http://127.0.0.1:9222",
+        "PICKET_ALLOWLIST": "example.com",
+        "OYS_WARDEN_POLICY": "{\"egressAllow\":[\"api.example.com\"]}"
+      }
+    }
+  }
+}
+```
+
+Each tool wraps the real library (`@askalf/warden`, `@askalf/canon`, `@askalf/keeper`, `@askalf/picket`, cordon's detector) — no reimplementation. `keeper_lease` returns only the lease handle; the secret is materialized at egress, never through the tool. (`warden-mcp` / `canon-mcp` remain the deployment-grade *mandatory* mode.)
+
 ## Run it
 
 ```bash
-npm install     # pulls warden + canon + keeper (warden deduped to one shared copy)
-npm run demo    # watch the layered defense: a clean call proceeds; a poisoned tool, a curl|bash, and a spent lease each get stopped
-npm test        # the same composition, as assertions
+npm install     # pulls warden + canon + keeper + picket + cordon
+npm run demo    # the layered defense: a clean call proceeds; a poisoned tool, a curl|bash, and a spent lease each get stopped
+npm run demo:mcp  # drive all five tools over the MCP protocol
+npm test        # the same compositions, as assertions
 ```
 
 ```text
