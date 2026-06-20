@@ -24,7 +24,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { check as wardenCheck } from '@askalf/warden';
+import { guardMcpCall } from '@askalf/warden/mcp';
 import { scan as canonScan } from '@askalf/canon';
 import { grant as keeperGrant } from '@askalf/keeper';
 import { GovernedBrowser } from '@askalf/picket';
@@ -100,7 +100,10 @@ export function createOysServer(opts = {}) {
     },
     annotations: { readOnlyHint: true },
   }, async ({ tool, input }) => {
-    const v = wardenCheck({ tool, input: input || {} }, wardenPolicy);
+    // Route through warden's MCP-call firewall (guardMcpCall), not a bare check, so a
+    // shell payload buried under ANY argument key — not just command/cmd — is caught
+    // via the all-keys leaf scan, matching the in-path warden-mcp proxy's defense.
+    const { verdict: v } = guardMcpCall({ name: tool, arguments: input || {} }, wardenPolicy);
     return json({ decision: v.decision, tier: v.tier, gray: !!v.gray, why: v.why });
   });
 
