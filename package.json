@@ -23,6 +23,10 @@
     "tsx": "^4.19.0",
     "zod": "^3.25.0"
   },
+  "overrides": {
+    "fastify": "^5.8.3",
+    "fast-uri": "^3.1.2"
+  },
   "keywords": ["ai-agents", "agent-security", "mcp", "own-your-stack", "demo"],
   "author": "Thomas Sprayberry",
   "license": "MIT",
