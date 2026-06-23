@@ -13,6 +13,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      # full install: the suite deps are git-hosted; tsx + the MCP SDK are on npm
+      # full install: the suite deps are git-hosted; the MCP SDK is on npm
       - run: npm install --no-audit --no-fund
       - run: npm test
