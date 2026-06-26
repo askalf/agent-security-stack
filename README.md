@@ -72,6 +72,7 @@ Each tool wraps the real library (`@askalf/warden`, `@askalf/canon`, `@askalf/ke
 npm install     # pulls warden + canon + keeper
 npm run demo    # the layered defense: a clean call proceeds; a poisoned tool, a curl|bash, and a spent lease each get stopped
 npm run demo:mcp  # drive all three tools over the MCP protocol
+npm run demo:audit # beat #4: the gate's decisions, hash-chained — tamper one entry, verification breaks
 npm test        # the same compositions, as assertions
 ```
 
@@ -83,6 +84,26 @@ npm test        # the same compositions, as assertions
 ```
 
 *vet it (canon) → contain it (warden) → key it never holds (keeper).*
+
+## The fourth guarantee — a tamper-evident trail
+
+Stopping a bad call is half of trust; the other half is **proving, afterward, what every layer decided** — without that, a compromised host could quietly rewrite the log to hide that it ever stopped (or *let through*) anything. The gate records each layer's verdict into a single **hash-chained** audit (warden's shipped [`./audit`](https://github.com/askalf/warden/blob/master/src/audit.mjs) primitive — the same one keeper reuses for secret access): each entry seals the one before it, rooted at a fixed genesis. Edit, delete, or splice any past verdict and `verify()` breaks and **points at the entry**.
+
+```text
+The trail on disk — 10 chained entries, each sealing the one before:
+  #0  canon/pass              hash a99d936f…  ⟵ prev 00000000…
+  #1  warden/allow (green)    hash 787fa068…  ⟵ prev a99d936f…
+  #2  keeper/redeem           hash 6b4380bd…  ⟵ prev 787fa068…
+  #3  gate/proceed            hash b0b1aea2…  ⟵ prev 6b4380bd…
+  #4  canon/block             hash 252d591e…  ⟵ prev b0b1aea2…   ← the poisoned tool, refused
+  …
+  verifyAuditFile() → {"ok":true,"entries":10}        ✅ INTACT
+
+Attacker rewrites entry #4 (canon's block) to read 'pass'…
+  verifyAuditFile() → {"ok":false,"at":4}             ❌ BROKEN — tamper detected at entry #4
+```
+
+`npm run demo:audit` runs this live; `npm test` asserts it (intact chain verifies; an edit, and a mid-log deletion, both break it and pinpoint where). keeper additionally seals its own secret-access log with an HMAC **tip**, so even truncating or re-rooting that log is detectable.
 
 ## Related Own Your Stack tools
 
