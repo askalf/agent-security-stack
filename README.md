@@ -1,6 +1,6 @@
 # agent-security-stack
 
-> The open-source agent-security suite — **[warden](https://github.com/askalf/warden) · [canon](https://github.com/askalf/canon) · [keeper](https://github.com/askalf/keeper)** — three tools that compose into one layered defense for every agent tool call, exposed as one MCP server. Part of **[Own Your Stack](https://github.com/askalf)**.
+> _**Own your agent security.**_ The open-source agent-security suite — **[warden](https://github.com/askalf/warden) · [canon](https://github.com/askalf/canon) · [keeper](https://github.com/askalf/keeper)** — three tools that compose into one layered defense for every agent tool call, exposed as one MCP server. Part of **[Own Your Stack](https://github.com/askalf)**.
 
 OpenClaw became 2026's first big AI-security disaster three ways at once: one-click **RCE**, a **poisoned skills** marketplace, and ~135k **leaked credentials**. Three failure modes — three small, open-source, zero-dependency tools, composed into one layered defense:
 
