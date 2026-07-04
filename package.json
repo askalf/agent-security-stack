@@ -15,9 +15,9 @@
     "test": "node --test"
   },
   "dependencies": {
-    "@askalf/warden": "git+https://github.com/askalf/warden.git#68246ccfa3608a84daa15441d76ac19d78f9fd24",
-    "@askalf/canon": "git+https://github.com/askalf/canon.git#68666dbef97985ff0e223526768cb20df32f780b",
-    "@askalf/keeper": "git+https://github.com/askalf/keeper.git#07f2af9550db26148e5029a195b8800d3351b818",
+    "@askalf/warden": "git+https://github.com/askalf/warden.git#c46ef542fe692d7bbb82fd8cd19fe70dfd5d3291",
+    "@askalf/canon": "git+https://github.com/askalf/canon.git#7953b1859eefa5ad7067729aa7196d2c1c8fd0a6",
+    "@askalf/keeper": "git+https://github.com/askalf/keeper.git#2f33fdd79cd3a01890a32fe7f3ff6e8d689e5cec",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "zod": "^3.25.0"
   },
