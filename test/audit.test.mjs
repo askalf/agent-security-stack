@@ -3,7 +3,7 @@
  *
  * stack.test.mjs proves each layer STOPS a bad call. This proves the sequence is
  * also PROVABLE after the fact: every layer's decision is recorded into a single
- * hash-chained log (warden's shipped audit primitive, reused across the gate), the
+ * hash-chained log (redstamp's shipped audit primitive, reused across the gate), the
  * untouched chain verifies, and any edit / deletion / splice of a past verdict
  * breaks verification and pinpoints where.
  */
@@ -19,16 +19,16 @@ test('the gate records every layer decision into one chain, in order', () => {
   const { audit, results } = runTrilogy({ home: path.join(os.tmpdir(), 'oys-audit-order-' + process.pid) });
   // the four beats produced the expected verdicts (same as stack.test.mjs)
   assert.ok(results.proceed.ok, 'beat 0: clean call proceeds');
-  assert.equal(results.canon.by, 'canon', 'beat 1: canon stops the poisoned tool');
-  assert.equal(results.warden.by, 'warden', 'beat 2: warden stops curl|bash');
-  assert.equal(results.keeper.by, 'keeper', 'beat 3: keeper denies the spent lease');
-  assert.equal(results.keeper.reason, 'exhausted');
+  assert.equal(results.truecopy.by, 'truecopy', 'beat 1: truecopy stops the poisoned tool');
+  assert.equal(results.redstamp.by, 'redstamp', 'beat 2: redstamp stops curl|bash');
+  assert.equal(results.strongroom.by, 'strongroom', 'beat 3: strongroom denies the spent lease');
+  assert.equal(results.strongroom.reason, 'exhausted');
 
-  // every consulted layer left a record, never out of order (canon before warden before keeper)
+  // every consulted layer left a record, never out of order (truecopy before redstamp before strongroom)
   const layers = audit.entries.map((e) => e.layer);
-  assert.ok(layers.includes('canon') && layers.includes('warden') && layers.includes('keeper') && layers.includes('gate'));
-  // the proceed beat must record canon→warden→keeper→gate as a contiguous prefix
-  assert.deepEqual(layers.slice(0, 4), ['canon', 'warden', 'keeper', 'gate']);
+  assert.ok(layers.includes('truecopy') && layers.includes('redstamp') && layers.includes('strongroom') && layers.includes('gate'));
+  // the proceed beat must record truecopy→redstamp→strongroom→gate as a contiguous prefix
+  assert.deepEqual(layers.slice(0, 4), ['truecopy', 'redstamp', 'strongroom', 'gate']);
 });
 
 test('the untouched chain verifies, on disk', () => {
@@ -47,9 +47,9 @@ test('editing a past verdict breaks verification and pinpoints the entry', () =>
   audit.flush(trailPath);
   assert.equal(verifyAuditFile(trailPath).ok, true);
 
-  // attacker rewrites canon's block on the poisoned tool to look like a pass
-  const at = findEntry(trailPath, (e) => e.layer === 'canon' && e.decision === 'block');
-  assert.ok(at >= 0, 'precondition: a canon block was recorded');
+  // attacker rewrites truecopy's block on the poisoned tool to look like a pass
+  const at = findEntry(trailPath, (e) => e.layer === 'truecopy' && e.decision === 'block');
+  assert.ok(at >= 0, 'precondition: a truecopy block was recorded');
   forgeEntry(trailPath, at, { decision: 'pass', verdict: 'clean' });
 
   const broken = verifyAuditFile(trailPath);
@@ -71,8 +71,8 @@ test('deleting an entry (truncating the chain mid-log) is also caught', () => {
 test('a fresh, untampered AuditLog roots at GENESIS and chains forward', () => {
   // smallest possible unit, independent of the trilogy scenario
   const a = new AuditLog();
-  const e0 = a.record({ layer: 'canon', decision: 'pass' });
-  const e1 = a.record({ layer: 'warden', decision: 'allow' });
+  const e0 = a.record({ layer: 'truecopy', decision: 'pass' });
+  const e1 = a.record({ layer: 'redstamp', decision: 'allow' });
   assert.equal(e0.prev, '0'.repeat(64), 'first entry roots at GENESIS');
   assert.equal(e1.prev, e0.hash, 'each entry seals the previous one');
   assert.equal(a.verify(), true);

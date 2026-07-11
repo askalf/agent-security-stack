@@ -8,7 +8,7 @@
  *   { "mcpServers": { "own-your-stack": {
  *       "command": "npx", "args": ["-y", "agent-security-stack", "oys-mcp"],
  *       "env": {
- *         "KEEPER_HOME": "/path/to/keeper/vault",
+ *         "KEEPER_HOME": "/path/to/strongroom/vault",
  *         "PICKET_CDP": "http://127.0.0.1:9222",
  *         "PICKET_ALLOWLIST": "example.com",
  *         "OYS_WARDEN_POLICY": "{\"egressAllow\":[\"api.example.com\"]}"
@@ -46,6 +46,6 @@ await server.connect(transport);
 console.error(
   `Own Your Stack MCP server ready (v${pkg.version}) · tools: ` +
   `warden_check, canon_scan, keeper_lease, cordon_redact, picket_observe · ` +
-  `keeper=${process.env.KEEPER_HOME ? 'vault set' : 'no KEEPER_HOME'} · ` +
-  `picket cdp=${process.env.PICKET_CDP || 'html-only'}`
+  `strongroom=${process.env.KEEPER_HOME ? 'vault set' : 'no KEEPER_HOME'} · ` +
+  `fieldpass cdp=${process.env.PICKET_CDP || 'html-only'}`
 );

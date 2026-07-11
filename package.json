@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "The open-source agent-security stack — warden + canon + keeper — composed into one layered defense, and exposed as a single MCP server. Part of Own Your Stack.",
+  "description": "The open-source agent-security stack — redstamp + truecopy + strongroom — composed into one layered defense, and exposed as a single MCP server. Part of Own Your Stack.",
   "bin": {
     "oys-mcp": "./bin/oys-mcp.mjs"
   },
@@ -15,9 +15,9 @@
     "test": "node --test"
   },
   "dependencies": {
-    "@askalf/warden": "git+https://github.com/askalf/warden.git#c46ef542fe692d7bbb82fd8cd19fe70dfd5d3291",
-    "@askalf/canon": "git+https://github.com/askalf/canon.git#7953b1859eefa5ad7067729aa7196d2c1c8fd0a6",
-    "@askalf/keeper": "git+https://github.com/askalf/keeper.git#2f33fdd79cd3a01890a32fe7f3ff6e8d689e5cec",
+    "@askalf/redstamp": "git+https://github.com/askalf/redstamp.git#4022dcd48dc867ef82a8a4c2a6f32f7599b3f701",
+    "@askalf/truecopy": "git+https://github.com/askalf/truecopy.git#55582d9b89dfdb9bbe6eea8face7ecc85ac21e24",
+    "@askalf/strongroom": "git+https://github.com/askalf/strongroom.git#9718edcae54b9bdee9f725cc4d5edae4abc2bbf8",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "zod": "^3.25.0"
   },
@@ -35,6 +35,6 @@
     "node": ">=20"
   },
   "overrides": {
-    "@askalf/warden": "$@askalf/warden"
+    "@askalf/redstamp": "$@askalf/redstamp"
   }
 }

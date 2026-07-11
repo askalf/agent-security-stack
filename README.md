@@ -18,7 +18,7 @@ They aren't three islands — they share one spine: truecopy reuses redstamp's s
 
 ```js
 function guardedCall({ tool, action, lease }) {
-  if (!canonVetted(tool))     return blocked('truecopy');   // supply chain  — is the tool pinned, unmodified, unpoisoned?
+  if (!truecopyVetted(tool))  return blocked('truecopy');   // supply chain  — is the tool pinned, unmodified, unpoisoned?
   if (redstamp.blocks(action))  return blocked('redstamp');  // runtime       — is the action safe?
   if (!strongroom.redeems(lease)) return blocked('strongroom');  // secrets       — is there a valid, scoped lease?
   return proceed();

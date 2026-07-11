@@ -9,7 +9,7 @@ import os from 'node:os';
 import fs from 'node:fs';
 import path from 'node:path';
 
-// keeper reads KEEPER_HOME lazily (at call time), so setting it here — after the
+// strongroom reads KEEPER_HOME lazily (at call time), so setting it here — after the
 // hoisted imports — is fine; seed a secret to lease.
 const KH = path.join(os.tmpdir(), 'oys-mcp-test-' + process.pid);
 process.env.KEEPER_HOME = KH;
@@ -18,7 +18,7 @@ fs.mkdirSync(KH, { recursive: true });
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import { createOysServer } from '../mcp.mjs';
-import { addSecret } from '@askalf/keeper';
+import { addSecret } from '@askalf/strongroom';
 
 addSecret('demo-api-key', 'SUPER-SECRET-VALUE-1234');
 

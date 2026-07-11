@@ -7,7 +7,7 @@ import os from 'node:os';
 import fs from 'node:fs';
 import path from 'node:path';
 
-// keeper reads KEEPER_HOME lazily, so seeding a temp vault here is enough.
+// strongroom reads KEEPER_HOME lazily, so seeding a temp vault here is enough.
 const KH = path.join(os.tmpdir(), 'oys-mcp-demo-' + process.pid);
 process.env.KEEPER_HOME = KH;
 fs.mkdirSync(KH, { recursive: true });
@@ -15,7 +15,7 @@ fs.mkdirSync(KH, { recursive: true });
 const { Client } = await import('@modelcontextprotocol/sdk/client/index.js');
 const { InMemoryTransport } = await import('@modelcontextprotocol/sdk/inMemory.js');
 const { createOysServer } = await import('../mcp.mjs');
-const { addSecret } = await import('@askalf/keeper');
+const { addSecret } = await import('@askalf/strongroom');
 
 addSecret('stripe-key', 'sk_live_DEMO_SECRET_NEVER_LEAKS');
 
