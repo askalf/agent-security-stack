@@ -12,6 +12,13 @@
 # must FAIL CLOSED — it proceeds only when redstamp itself would allow the action.
 cd "$SRC/agent-security-stack"
 
+# The root lockfile resolves the @askalf/* deps to git+ssh://git@github.com URLs.
+# GitHub-hosted CI runners can clone those, but this OSS-Fuzz build container has
+# no SSH key — so rewrite ssh -> anonymous https (these repos are public) at clone
+# time, without touching the shared lockfile.
+git config --global --add url."https://github.com/".insteadOf "ssh://git@github.com/"
+git config --global --add url."https://github.com/".insteadOf "git@github.com:"
+
 # 1. project runtime deps — npm ci verifies every integrity hash in the committed
 #    root lockfile (the @askalf/* deps are git-pinned there; the MCP SDK is on npm).
 npm ci --no-audit --no-fund
