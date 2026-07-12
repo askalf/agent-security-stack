@@ -11,9 +11,8 @@ import path from 'node:path';
 
 // strongroom reads KEEPER_HOME lazily (at call time), so setting it here — after the
 // hoisted imports — is fine; seed a secret to lease.
-const KH = path.join(os.tmpdir(), 'oys-mcp-test-' + process.pid);
+const KH = fs.mkdtempSync(path.join(os.tmpdir(), 'oys-mcp-test-'));
 process.env.KEEPER_HOME = KH;
-fs.mkdirSync(KH, { recursive: true });
 
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';

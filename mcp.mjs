@@ -67,7 +67,8 @@ export function createOysServer(opts = {}) {
   }, async ({ manifest }) => {
     let parsed;
     try { parsed = JSON.parse(manifest); } catch (e) { return err(`manifest is not valid JSON: ${e.message}`); }
-    const tmp = path.join(os.tmpdir(), `oys-truecopy-${process.pid}-${Math.abs(hashStr(manifest))}.json`);
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'oys-truecopy-'));
+    const tmp = path.join(dir, 'manifest.json');
     try {
       fs.writeFileSync(tmp, JSON.stringify(parsed));
       const r = truecopyScan(tmp);
@@ -75,7 +76,7 @@ export function createOysServer(opts = {}) {
     } catch (e) {
       return err(`truecopy scan failed: ${e.message}`);
     } finally {
-      try { fs.unlinkSync(tmp); } catch { /* noop */ }
+      fs.rmSync(dir, { recursive: true, force: true });
     }
   });
 
@@ -102,11 +103,4 @@ export function createOysServer(opts = {}) {
   });
 
   return { server };
-}
-
-/** Tiny stable string hash for temp filenames (not security-sensitive). */
-function hashStr(s) {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) { h = (h << 5) - h + s.charCodeAt(i); h |= 0; }
-  return h;
 }
