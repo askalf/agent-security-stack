@@ -1,0 +1,4 @@
+# The ClusterFuzzLite build script runs in a Linux (OSS-Fuzz) container — a CR
+# byte would break its shebang/commands. Pin shell scripts to LF so a Windows
+# checkout + re-commit (autocrlf) can't silently CRLF-ify them.
+*.sh text eol=lf

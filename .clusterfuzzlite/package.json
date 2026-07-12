@@ -1,0 +1,8 @@
+{
+  "name": "agent-security-stack-fuzz",
+  "private": true,
+  "description": "Fuzz-only dependency manifest for ClusterFuzzLite. Jazzer.js is hash-pinned via the committed lockfile (`npm ci` verifies integrity — Scorecard Pinned-Dependencies) and is merged alongside the project's runtime deps only inside the fuzz build; it is never added to the project's own package.json.",
+  "dependencies": {
+    "@jazzer.js/core": "4.0.0"
+  }
+}

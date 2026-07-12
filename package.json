@@ -12,7 +12,8 @@
     "demo:mcp": "node demo/mcp-demo.mjs",
     "demo:audit": "node demo/audit-demo.mjs",
     "mcp": "node bin/oys-mcp.mjs",
-    "test": "node --test"
+    "test": "node --test",
+    "fuzz": "node fuzz/run.mjs"
   },
   "dependencies": {
     "@askalf/redstamp": "git+https://github.com/askalf/redstamp.git#4022dcd48dc867ef82a8a4c2a6f32f7599b3f701",
