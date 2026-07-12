@@ -1,5 +1,7 @@
 # agent-security-stack
 
+[![OpenSSF Scorecard](https://img.shields.io/ossf-scorecard/github.com/askalf/agent-security-stack?label=OpenSSF%20Scorecard)](https://scorecard.dev/viewer/?uri=github.com/askalf/agent-security-stack)
+
 > _**Own your agent security.**_ The open-source agent-security suite — **[redstamp](https://github.com/askalf/redstamp) · [truecopy](https://github.com/askalf/truecopy) · [strongroom](https://github.com/askalf/strongroom)** — three tools that compose into one layered defense for every agent tool call, exposed as one MCP server. Part of **[Own Your Stack](https://github.com/askalf)**.
 
 OpenClaw became 2026's first big AI-security disaster three ways at once: one-click **RCE**, a **poisoned skills** marketplace, and ~135k **leaked credentials**. Three failure modes — three small, open-source, zero-dependency tools, composed into one layered defense:
