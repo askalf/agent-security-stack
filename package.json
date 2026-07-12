@@ -19,7 +19,7 @@
     "@askalf/truecopy": "git+https://github.com/askalf/truecopy.git#55582d9b89dfdb9bbe6eea8face7ecc85ac21e24",
     "@askalf/strongroom": "git+https://github.com/askalf/strongroom.git#9718edcae54b9bdee9f725cc4d5edae4abc2bbf8",
     "@modelcontextprotocol/sdk": "^1.29.0",
-    "zod": "^3.25.0"
+    "zod": "^4.4.3"
   },
   "keywords": [
     "ai-agents",
