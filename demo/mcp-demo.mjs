@@ -8,9 +8,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 // strongroom reads KEEPER_HOME lazily, so seeding a temp vault here is enough.
-const KH = path.join(os.tmpdir(), 'oys-mcp-demo-' + process.pid);
+const KH = fs.mkdtempSync(path.join(os.tmpdir(), 'oys-mcp-demo-'));
 process.env.KEEPER_HOME = KH;
-fs.mkdirSync(KH, { recursive: true });
 
 const { Client } = await import('@modelcontextprotocol/sdk/client/index.js');
 const { InMemoryTransport } = await import('@modelcontextprotocol/sdk/inMemory.js');

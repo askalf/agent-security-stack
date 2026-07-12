@@ -16,7 +16,7 @@ import path from 'node:path';
 import { runTrilogy, verifyAuditFile, forgeEntry, findEntry, AuditLog } from '../audit-trail.mjs';
 
 test('the gate records every layer decision into one chain, in order', () => {
-  const { audit, results } = runTrilogy({ home: path.join(os.tmpdir(), 'oys-audit-order-' + process.pid) });
+  const { audit, results } = runTrilogy({ home: fs.mkdtempSync(path.join(os.tmpdir(), 'oys-audit-order-')) });
   // the four beats produced the expected verdicts (same as stack.test.mjs)
   assert.ok(results.proceed.ok, 'beat 0: clean call proceeds');
   assert.equal(results.truecopy.by, 'truecopy', 'beat 1: truecopy stops the poisoned tool');
@@ -32,7 +32,7 @@ test('the gate records every layer decision into one chain, in order', () => {
 });
 
 test('the untouched chain verifies, on disk', () => {
-  const { audit, trailPath } = runTrilogy({ home: path.join(os.tmpdir(), 'oys-audit-intact-' + process.pid) });
+  const { audit, trailPath } = runTrilogy({ home: fs.mkdtempSync(path.join(os.tmpdir(), 'oys-audit-intact-')) });
   // in-memory verify
   assert.equal(audit.verify(), true);
   // durable verify (the daemon-grade path)
@@ -43,7 +43,7 @@ test('the untouched chain verifies, on disk', () => {
 });
 
 test('editing a past verdict breaks verification and pinpoints the entry', () => {
-  const { audit, trailPath } = runTrilogy({ home: path.join(os.tmpdir(), 'oys-audit-edit-' + process.pid) });
+  const { audit, trailPath } = runTrilogy({ home: fs.mkdtempSync(path.join(os.tmpdir(), 'oys-audit-edit-')) });
   audit.flush(trailPath);
   assert.equal(verifyAuditFile(trailPath).ok, true);
 
@@ -58,7 +58,7 @@ test('editing a past verdict breaks verification and pinpoints the entry', () =>
 });
 
 test('deleting an entry (truncating the chain mid-log) is also caught', () => {
-  const { audit, trailPath } = runTrilogy({ home: path.join(os.tmpdir(), 'oys-audit-del-' + process.pid) });
+  const { audit, trailPath } = runTrilogy({ home: fs.mkdtempSync(path.join(os.tmpdir(), 'oys-audit-del-')) });
   audit.flush(trailPath);
   const lines = fs.readFileSync(trailPath, 'utf8').split('\n').filter((l) => l.trim());
   // drop a middle entry: the NEXT entry's `prev` no longer matches the new predecessor's hash
