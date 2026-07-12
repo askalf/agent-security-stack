@@ -66,7 +66,7 @@ export function guardedCall({ manifest, name, action, leaseId, host, lock, polic
 // so the demo and the assertions exercise the EXACT same run. Sets up an isolated
 // strongroom vault + a clean (pinned) and a poisoned (never-pinned) tool, then drives
 // the four beats through the audited gate. Returns the trail + per-beat results.
-export function runTrilogy({ home = path.join(os.tmpdir(), 'oys-audit-' + process.pid) } = {}) {
+export function runTrilogy({ home = fs.mkdtempSync(path.join(os.tmpdir(), 'oys-audit-')) } = {}) {
   process.env.KEEPER_HOME = home;
   fs.mkdirSync(home, { recursive: true });
   const tmp = (n) => path.join(home, n);

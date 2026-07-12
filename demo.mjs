@@ -8,9 +8,8 @@ import { check } from '@askalf/redstamp';
 import { scan, pin, diff } from '@askalf/truecopy';
 import { addSecret, grant, redeem } from '@askalf/strongroom';
 
-const HOME = path.join(os.tmpdir(), 'ass-demo-' + process.pid);
+const HOME = fs.mkdtempSync(path.join(os.tmpdir(), 'ass-demo-'));
 process.env.KEEPER_HOME = HOME;
-fs.mkdirSync(HOME, { recursive: true });
 const tmp = (n) => path.join(HOME, n);
 const lock = tmp('truecopy.lock');
 const policy = { egressAllow: ['api.example.com'] };
