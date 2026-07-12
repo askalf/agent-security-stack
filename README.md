@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/askalf/agent-security-stack/actions/workflows/ci.yml/badge.svg)](https://github.com/askalf/agent-security-stack/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/askalf/agent-security-stack/actions/workflows/codeql.yml/badge.svg)](https://github.com/askalf/agent-security-stack/actions/workflows/codeql.yml)
+[![Fuzzing](https://github.com/askalf/agent-security-stack/actions/workflows/cflite.yml/badge.svg)](https://github.com/askalf/agent-security-stack/actions/workflows/cflite.yml)
 [![OpenSSF Scorecard](https://img.shields.io/ossf-scorecard/github.com/askalf/agent-security-stack?label=OpenSSF%20Scorecard)](https://scorecard.dev/viewer/?uri=github.com/askalf/agent-security-stack)
 
 > _**Own your agent security.**_ The open-source agent-security suite — **[redstamp](https://github.com/askalf/redstamp) · [truecopy](https://github.com/askalf/truecopy) · [strongroom](https://github.com/askalf/strongroom)** — three tools that compose into one layered defense for every agent tool call, exposed as one MCP server. Part of **[Own Your Stack](https://github.com/askalf)**.
