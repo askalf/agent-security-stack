@@ -1,0 +1,98 @@
+{
+  "name": "own-your-stack",
+  "tools": [
+    {
+      "name": "canon_scan",
+      "title": "Scan an MCP/skill manifest for supply-chain poisoning",
+      "description": "Paste an MCP server or skill manifest (JSON) and truecopy scans its tool names/descriptions for hidden instructions, exfiltration lures, and other poisoned-skill / tool-poisoning attacks. Returns a verdict (clean / flagged) and the findings. Vet a third-party tool BEFORE you trust it.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "manifest": {
+            "type": "string",
+            "description": "the MCP/skill manifest as JSON text"
+          }
+        },
+        "required": [
+          "manifest"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "keeper_lease",
+      "title": "Lease a credential — you get an opaque handle, never the secret",
+      "description": "Request a short-lived, scoped lease for a credential held in the strongroom vault. You receive a lease handle (id + scope + ttl); the secret itself is materialized only at the egress point when the lease is redeemed, and never enters your context. The named secret must already be in the vault.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "the vault secret name to lease"
+          },
+          "host": {
+            "description": "restrict the lease to this destination host",
+            "type": "string"
+          },
+          "ttlS": {
+            "description": "lease lifetime in seconds (default 300)",
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "uses": {
+            "description": "max redemptions (default 1)",
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "warden_check",
+      "title": "Is this action safe to run? (action firewall)",
+      "description": "Submit a tool action — { tool, input } — and get redstamp's verdict: decision (allow / approve / block), risk tier, and the reasons. Catches shell/exec, SSRF + cloud-metadata, secret exfiltration, dangerous writes/deletes, and prompt-injection in the arguments. Call this BEFORE executing any consequential tool call.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": {
+            "type": "string",
+            "description": "the tool/action name, e.g. fetch, shell, write, delete, read"
+          },
+          "input": {
+            "description": "the arguments the tool would run with (url, command, path, content, …)",
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {}
+          }
+        },
+        "required": [
+          "tool"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    }
+  ]
+}

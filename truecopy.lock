@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": {
+    "own-your-stack": {
+      "source": "mcp-manifest.json",
+      "kind": "mcp",
+      "hash": "82ee2bdcb462d9ddac4ed2a488a5b6c10a2308fbe6071ef5da3a12c47e14b44c",
+      "scannedAt": "2026-07-16T17:30:10.521Z",
+      "verdict": "clean",
+      "findings": 0,
+      "detection": {
+        "engine": "redstamp",
+        "version": "0.4.1"
+      },
+      "parts": {
+        "canon_scan": "b0465b249ae555a3872488db17c1fb2965951ec7b9bdfe6c4590901e6cbbd15a",
+        "keeper_lease": "7a62c4055c035c4a6602a098264f8ce150026e8d1ac7951a4e3cad2f3d645c16",
+        "warden_check": "21e1989a475f3483a81a2fb85e9f214bb0d453cc634f32d438e125c1852797f1",
+        "(manifest)": "d0e70ff8f270eabfc57551ef012b3becc28668e593fdefa6185405c51984fa6b"
+      }
+    }
+  }
+}
