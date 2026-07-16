@@ -68,6 +68,29 @@ test('deleting an entry (truncating the chain mid-log) is also caught', () => {
   assert.equal(v.ok, false, 'removing a link must break the chain');
 });
 
+test('tail-truncation (dropping the NEWEST verdicts) is caught against the gate\'s checkpoint', () => {
+  // A plain hash chain catches an edit or a MIDDLE deletion, but a valid PREFIX
+  // still verifies — so lopping off the most-recent entries (an attacker hiding
+  // the verdict that just stopped them) slips a bare verify(). redstamp 0.5.1
+  // pins the chain head: the gate holds { head, count } in memory as it records
+  // (a checkpoint an attacker who only rewrites the on-disk log cannot reach),
+  // and verifying against it catches the truncation.
+  const { audit, trailPath } = runTrilogy({ home: fs.mkdtempSync(path.join(os.tmpdir(), 'oys-audit-trunc-')) });
+  audit.flush(trailPath);
+  const checkpoint = { head: audit.entries.at(-1).hash, count: audit.entries.length };
+
+  const lines = fs.readFileSync(trailPath, 'utf8').split('\n').filter((l) => l.trim());
+  assert.ok(lines.length >= 3, 'precondition: several entries to truncate');
+  fs.writeFileSync(trailPath, lines.slice(0, -2).join('\n') + '\n'); // drop the newest two
+
+  // the chain alone still passes the surviving prefix — this is the gap the checkpoint closes
+  assert.equal(verifyAuditFile(trailPath).ok, true, 'a truncated prefix passes the bare chain');
+  // against the trusted checkpoint, the truncation is caught and named
+  const caught = verifyAuditFile(trailPath, checkpoint);
+  assert.equal(caught.ok, false, 'tail-truncation must be caught against the checkpoint');
+  assert.equal(caught.reason, 'truncated');
+});
+
 test('a fresh, untampered AuditLog roots at GENESIS and chains forward', () => {
   // smallest possible unit, independent of the trilogy scenario
   const a = new AuditLog();
