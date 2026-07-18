@@ -67,7 +67,7 @@ The proxies above enforce *mandatorily, in the path*. `oys-mcp` is the complemen
 }
 ```
 
-> Not yet on npm — installs straight from GitHub.
+> The stack itself isn't on npm — `npx -y github:askalf/agent-security-stack` pulls it straight from GitHub (add `--allow-git` on npm ≥ 12). Of the tools it composes, `@askalf/truecopy` and `@askalf/strongroom` install from npm; redstamp installs from its signed release tarball — `npm i -g https://github.com/askalf/redstamp/releases/latest/download/redstamp.tgz` — or the one-liners on [its tool page](https://ownyourstack.sprayberrylabs.com/tools/redstamp).
 
 Each tool wraps the real library (`@askalf/redstamp`, `@askalf/truecopy`, `@askalf/strongroom`) — no reimplementation. `keeper_lease` returns only the lease handle; the secret is materialized at egress, never through the tool. (`redstamp-mcp` / `truecopy-mcp` remain the deployment-grade *mandatory* mode.)
 
