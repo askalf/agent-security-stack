@@ -36,6 +36,7 @@
     "node": ">=20"
   },
   "overrides": {
-    "@askalf/redstamp": "$@askalf/redstamp"
+    "@askalf/redstamp": "$@askalf/redstamp",
+    "@hono/node-server": "^2.0.5"
   }
 }
