@@ -4,6 +4,9 @@
 [![CodeQL](https://github.com/askalf/agent-security-stack/actions/workflows/codeql.yml/badge.svg)](https://github.com/askalf/agent-security-stack/actions/workflows/codeql.yml)
 [![Fuzzing](https://github.com/askalf/agent-security-stack/actions/workflows/cflite.yml/badge.svg)](https://github.com/askalf/agent-security-stack/actions/workflows/cflite.yml)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/askalf/agent-security-stack/badge)](https://scorecard.dev/viewer/?uri=github.com/askalf/agent-security-stack)
+<!-- OpenSSF Best Practices — uncomment once enrolled at https://www.bestpractices.dev and replace PROJECT_ID:
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/PROJECT_ID/badge)](https://www.bestpractices.dev/projects/PROJECT_ID)
+-->
 
 > _**Own your agent security.**_ The open-source agent-security suite — **[redstamp](https://github.com/askalf/redstamp) · [truecopy](https://github.com/askalf/truecopy) · [strongroom](https://github.com/askalf/strongroom)** — three tools that compose into one layered defense for every agent tool call, exposed as one MCP server. Part of **[Own Your Stack](https://github.com/askalf)**.
 
@@ -118,10 +121,11 @@ the gate holds {head, count} in memory as it records:
 
 ## Related Own Your Stack tools
 
-This stack guards the **tool-call** path. Two more **[Own Your Stack](https://github.com/askalf)** tools — separate from this suite — apply the same principle (*govern the agent, don't trust the surface*) to the other surfaces an agent touches:
+This stack guards the **tool-call** path. Three more **[Own Your Stack](https://github.com/askalf)** tools — separate from this suite — apply the same principle (*govern the agent, don't trust the surface*) to the other surfaces an agent touches:
 
 - **[cordon](https://github.com/askalf/cordon)** — *own your prompts.* A drop-in LLM compliance gateway that strips PII / PHI / PCI / secrets out of a prompt before it reaches the model — fail-closed, deterministic, with a hash-chained audit.
 - **[fieldpass](https://github.com/askalf/fieldpass)** — *own your agent browser.* An indirect-prompt-injection firewall + action gate around a CDP / Chrome browser, so an agent can read a hostile web page without being hijacked by it.
+- **[plumbline](https://github.com/askalf/plumbline)** — *own your agent trajectory.* Out-of-band, read-only monitoring of the whole action sequence against the declared job — it scores what an agent is *actually doing* against what it was asked to do, catching escapes assembled from individually-authorized steps. A monitor **above** the in-path trilogy; it never blocks an action.
 
 ---
 Part of **[Own Your Stack](https://github.com/askalf)** — own your AI infrastructure instead of renting it. Built by Thomas Sprayberry.
