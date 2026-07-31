@@ -111,13 +111,13 @@ Attacker rewrites entry #4 (truecopy's block) to read 'pass'…
   verifyAuditFile() → {"ok":false,"at":4}             ❌ BROKEN — tamper detected at entry #4
 
 A sneakier tamper — the attacker DELETES the newest verdicts (a valid PREFIX
-still verifies by the chain alone). redstamp 0.5.1 anchors the chain head, and
+still verifies by the chain alone). redstamp anchors the chain head (since 0.5.1), and
 the gate holds {head, count} in memory as it records:
   verifyAuditFile(trail)            → {"ok":true,"entries":8}                 ⚠️  prefix still checks out
   verifyAuditFile(trail, checkpoint) → {"ok":false,"at":8,"reason":"truncated"}  ❌ TRUNCATION caught
 ```
 
-`npm run demo:audit` runs this live; `npm test` asserts it (intact chain verifies; an edit, a mid-log deletion, **and a tail-truncation** each break it and pinpoint where). Tail-truncation — deleting the most-recent entries — is the one tamper a bare hash chain can't see, because a valid prefix still verifies. **redstamp 0.5.1** closes it: it anchors the chain head in a checkpoint (`verifyAuditFile(path, { head, count })`), so a log rewound to hide the verdict that just stopped an attacker is caught — the same guarantee strongroom already gives its secret-access log with an HMAC **tip**.
+`npm run demo:audit` runs this live; `npm test` asserts it (intact chain verifies; an edit, a mid-log deletion, **and a tail-truncation** each break it and pinpoint where). Tail-truncation — deleting the most-recent entries — is the one tamper a bare hash chain can't see, because a valid prefix still verifies. **redstamp closes it** (since 0.5.1): it anchors the chain head in a checkpoint (`verifyAuditFile(path, { head, count })`), so a log rewound to hide the verdict that just stopped an attacker is caught — the same guarantee strongroom already gives its secret-access log with an HMAC **tip**.
 
 ## Related Own Your Stack tools
 
