@@ -16,7 +16,7 @@
     "fuzz": "node fuzz/run.mjs"
   },
   "dependencies": {
-    "@askalf/redstamp": "git+https://github.com/askalf/redstamp.git#27c26851e175045a3e274042c96760cf52dce9da",
+    "@askalf/redstamp": "git+https://github.com/askalf/redstamp.git#5222bc1b0c1e5dd3daf77078fd964f9c2215fe29",
     "@askalf/truecopy": "git+https://github.com/askalf/truecopy.git#951460e003ab16ef86ea5f297c6523c09b4fba4e",
     "@askalf/strongroom": "git+https://github.com/askalf/strongroom.git#43c9ca600ced5f9acc755590bc324e95764a5195",
     "@modelcontextprotocol/sdk": "^1.30.0",
