@@ -61,7 +61,7 @@ L('\n  The edit is silent in the file but LOUD in the chain: you cannot rewrite 
 L('  without breaking the seal.');
 
 // The other tamper a plain chain can't see: DELETING the newest verdicts. A valid
-// PREFIX still verifies — so redstamp 0.5.1 pins the head. The gate keeps the chain
+// PREFIX still verifies — so redstamp (since 0.5.1) pins the head. The gate keeps the chain
 // head + length in memory as it records (a checkpoint an on-disk attacker can't
 // reach); verifying against it catches a truncation the bare chain waves through.
 const fresh = runTrilogy();
@@ -74,7 +74,7 @@ const vsCheckpoint = verifyAuditFile(fresh.trailPath, checkpoint);
 L('\nA sneakier tamper — the attacker DELETES the last two verdicts instead of editing one:');
 L('  verifyAuditFile() alone     → ' + JSON.stringify(barePrefix) + '   ⚠️  a truncated prefix still checks out');
 L('  …against the gate\'s checkpoint → ' + JSON.stringify(vsCheckpoint) + '   ❌ TRUNCATION caught');
-L('\n  redstamp 0.5.1 anchors the chain head, so truncating the newest entries is caught too —');
+L('\n  redstamp (since 0.5.1) anchors the chain head, so truncating the newest entries is caught too —');
 L('  the same protection strongroom gives its secret-access log with an HMAC tip.');
 L('  strongroomAudit.verify(): ' + JSON.stringify(strongroomAudit.verify()));
 
