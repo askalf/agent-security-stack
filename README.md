@@ -4,6 +4,9 @@
 [![CodeQL](https://github.com/askalf/agent-security-stack/actions/workflows/codeql.yml/badge.svg)](https://github.com/askalf/agent-security-stack/actions/workflows/codeql.yml)
 [![Fuzzing](https://github.com/askalf/agent-security-stack/actions/workflows/cflite.yml/badge.svg)](https://github.com/askalf/agent-security-stack/actions/workflows/cflite.yml)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/askalf/agent-security-stack/badge)](https://scorecard.dev/viewer/?uri=github.com/askalf/agent-security-stack)
+<!-- agent-security-stack on Glama — uncomment once the server is indexed in the directory (submit at https://glama.ai/mcp/servers; glama.json is already in place):
+[![agent-security-stack on Glama](https://glama.ai/mcp/servers/askalf/agent-security-stack/badges/card.svg)](https://glama.ai/mcp/servers/askalf/agent-security-stack)
+-->
 <!-- OpenSSF Best Practices — uncomment once enrolled at https://www.bestpractices.dev and replace PROJECT_ID:
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/PROJECT_ID/badge)](https://www.bestpractices.dev/projects/PROJECT_ID)
 -->
