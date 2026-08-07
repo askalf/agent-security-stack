@@ -54,9 +54,11 @@ The proxies above enforce *mandatorily, in the path*. `oys-mcp` is the complemen
 
 | tool | layer | does |
 |------|-------|------|
-| `warden_check` | contain | is this `{tool, input}` safe to run? → allow / approve / block + why |
-| `canon_scan` | vet | scan an MCP/skill manifest (JSON) for poisoning → clean / flagged |
-| `keeper_lease` | key | lease a vault secret → an **opaque handle**; the secret never returns |
+| `redstamp_check` | contain | is this `{tool, input}` safe to run? → allow / approve / block + why |
+| `truecopy_scan` | vet | scan an MCP/skill manifest (JSON) for poisoning → clean / flagged |
+| `strongroom_lease` | key | lease a vault secret → an **opaque handle**; the secret never returns |
+
+> **Renamed August 2026** — the tools now carry their brand names. The pre-rename codenames stay registered as deprecated aliases of the same handlers (identical schemas and behavior), so existing configs keep working: `warden_check` → `redstamp_check` · `canon_scan` → `truecopy_scan` · `keeper_lease` → `strongroom_lease`.
 
 ```json
 {
@@ -75,7 +77,7 @@ The proxies above enforce *mandatorily, in the path*. `oys-mcp` is the complemen
 
 > The stack itself isn't on npm — `npx -y github:askalf/agent-security-stack` pulls it straight from GitHub (add `--allow-git` on npm ≥ 12). Of the tools it composes, `@askalf/truecopy` and `@askalf/strongroom` install from npm; redstamp installs from its signed release tarball — `npm i -g https://github.com/askalf/redstamp/releases/latest/download/redstamp.tgz` — or the one-liners on [its tool page](https://ownyourstack.sprayberrylabs.com/tools/redstamp).
 
-Each tool wraps the real library (`@askalf/redstamp`, `@askalf/truecopy`, `@askalf/strongroom`) — no reimplementation. `keeper_lease` returns only the lease handle; the secret is materialized at egress, never through the tool. (`redstamp-mcp` / `truecopy-mcp` remain the deployment-grade *mandatory* mode.)
+Each tool wraps the real library (`@askalf/redstamp`, `@askalf/truecopy`, `@askalf/strongroom`) — no reimplementation. `strongroom_lease` returns only the lease handle; the secret is materialized at egress, never through the tool. (`redstamp-mcp` / `truecopy-mcp` remain the deployment-grade *mandatory* mode.)
 
 ## Run it
 

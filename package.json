@@ -1,6 +1,6 @@
 {
   "name": "agent-security-stack",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "The open-source agent-security stack — redstamp + truecopy + strongroom — composed into one layered defense, and exposed as a single MCP server. Part of Own Your Stack.",

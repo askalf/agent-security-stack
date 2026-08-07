@@ -4,18 +4,21 @@
     "own-your-stack": {
       "source": "mcp-manifest.json",
       "kind": "mcp",
-      "hash": "82ee2bdcb462d9ddac4ed2a488a5b6c10a2308fbe6071ef5da3a12c47e14b44c",
-      "scannedAt": "2026-07-16T17:30:10.521Z",
+      "hash": "bb1424d5d5d4156d6ee0d55415137a92afe15568a7982131b3a3d1dd055cb26e",
+      "scannedAt": "2026-08-07T20:12:15.397Z",
       "verdict": "clean",
       "findings": 0,
       "detection": {
         "engine": "redstamp",
-        "version": "0.4.1"
+        "version": "0.7.5"
       },
       "parts": {
-        "canon_scan": "b0465b249ae555a3872488db17c1fb2965951ec7b9bdfe6c4590901e6cbbd15a",
-        "keeper_lease": "7a62c4055c035c4a6602a098264f8ce150026e8d1ac7951a4e3cad2f3d645c16",
-        "warden_check": "21e1989a475f3483a81a2fb85e9f214bb0d453cc634f32d438e125c1852797f1",
+        "canon_scan": "8b3e19e1be426b835b156d515230975f98b27f3d88b65108b199bb8a1a63c69a",
+        "keeper_lease": "421b9d1d022a89917d0ff6df5548b7a4f4cfe9a30ac5e18c6d6b2bceb9985a33",
+        "redstamp_check": "73feae3ae2d02ef29fbe1dbda7be2051a2179d9d3edbf1ae156914e8acfb18b2",
+        "strongroom_lease": "5644c4e7c61e7434fb6fc4f1c0f0bf41e727c56fc67fcb3cbcf7a5ddb83fccec",
+        "truecopy_scan": "258bb656cbdb5d0d80200162aa0a723bf7f167c59f05a94f74477044284f6763",
+        "warden_check": "5c414be9cacd3e1feefca1de42a681393cbff1f77a605558c9954e27ac96628e",
         "(manifest)": "d0e70ff8f270eabfc57551ef012b3becc28668e593fdefa6185405c51984fa6b"
       }
     }

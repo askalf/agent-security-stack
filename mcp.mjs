@@ -2,9 +2,13 @@
  * Own Your Stack — one MCP server, the agent-security trilogy as callable
  * tools. An MCP client (Claude Desktop, Claude Code, any agent runtime) gets:
  *
- *   warden_check   — contain it:   is this tool action safe to run? (firewall)
- *   canon_scan     — vet it:        scan an MCP/skill manifest for poisoning
- *   keeper_lease   — key it:        lease a credential — opaque handle, no secret
+ *   redstamp_check   — contain it:   is this tool action safe to run? (firewall)
+ *   truecopy_scan    — vet it:        scan an MCP/skill manifest for poisoning
+ *   strongroom_lease — key it:        lease a credential — opaque handle, no secret
+ *
+ * Renamed August 2026 — the pre-rename codenames (warden_check, canon_scan,
+ * keeper_lease) remain registered as deprecated aliases of the same handlers,
+ * with identical schemas and behavior, so existing configs keep working.
  *
  * redstamp and truecopy ALSO ship transparent stdio proxies (`redstamp-mcp`,
  * `truecopy-mcp`) that enforce mandatorily in front of a downstream server — the
@@ -37,8 +41,32 @@ export function createOysServer(opts = {}) {
 
   const server = new McpServer({ name: 'own-your-stack', version: opts.version || '0.1.0' });
 
+  // Canonical names + their pre-rename codename aliases (renamed August 2026).
+  // The alias registers the SAME schema and handler — only the description
+  // changes, so tools/list makes the canonical name the primary surface while
+  // nothing breaks for callers still configured with the old name.
+  const ALIASES = {
+    warden_check: 'redstamp_check',
+    canon_scan: 'truecopy_scan',
+    keeper_lease: 'strongroom_lease',
+  };
+  const registerCanonical = (name, config, handler) => {
+    server.registerTool(name, config, handler);
+    return { name, config, handler };
+  };
+  const registerAliases = (...tools) => {
+    const byName = Object.fromEntries(tools.map((t) => [t.name, t]));
+    for (const [alias, canonical] of Object.entries(ALIASES)) {
+      const { config, handler } = byName[canonical];
+      server.registerTool(alias, {
+        ...config,
+        description: `Deprecated alias of ${canonical} — kept for existing configs.`,
+      }, handler);
+    }
+  };
+
   // ── redstamp: contain it ──────────────────────────────────────────────────
-  server.registerTool('warden_check', {
+  const redstampCheck = registerCanonical('redstamp_check', {
     title: 'Is this action safe to run? (action firewall)',
     description:
       'Submit a tool action — { tool, input } — and get redstamp\'s verdict: decision (allow / approve / block), risk tier, and the reasons. Catches shell/exec, SSRF + cloud-metadata, secret exfiltration, dangerous writes/deletes, and prompt-injection in the arguments. Call this BEFORE executing any consequential tool call.',
@@ -56,7 +84,7 @@ export function createOysServer(opts = {}) {
   });
 
   // ── truecopy: vet it ──────────────────────────────────────────────────────
-  server.registerTool('canon_scan', {
+  const truecopyScanTool = registerCanonical('truecopy_scan', {
     title: 'Scan an MCP/skill manifest for supply-chain poisoning',
     description:
       'Paste an MCP server or skill manifest (JSON) and truecopy scans its tool names/descriptions for hidden instructions, exfiltration lures, and other poisoned-skill / tool-poisoning attacks. Returns a verdict (clean / flagged) and the findings. Vet a third-party tool BEFORE you trust it.',
@@ -81,7 +109,7 @@ export function createOysServer(opts = {}) {
   });
 
   // ── strongroom: key it (never hands over the secret) ──────────────────────
-  server.registerTool('keeper_lease', {
+  const strongroomLease = registerCanonical('strongroom_lease', {
     title: 'Lease a credential — you get an opaque handle, never the secret',
     description:
       'Request a short-lived, scoped lease for a credential held in the strongroom vault. You receive a lease handle (id + scope + ttl); the secret itself is materialized only at the egress point when the lease is redeemed, and never enters your context. The named secret must already be in the vault.',
@@ -101,6 +129,10 @@ export function createOysServer(opts = {}) {
       return err(`strongroom could not lease "${name}": ${e.message}`);
     }
   });
+
+  // The deprecated codename aliases go last, so tools/list leads with the
+  // canonical names.
+  registerAliases(redstampCheck, truecopyScanTool, strongroomLease);
 
   return { server };
 }
