@@ -28,4 +28,4 @@ jobs:
       - name: manifest matches the live tool surface
         run: node support/dump-tools.mjs --check
       - name: truecopy verify
-        uses: askalf/truecopy-action@5c6fcf00edb83ff4846206392722292d45fee227 # v1.0.1
+        uses: askalf/truecopy-action@f9492aba42bacb64b0af013a6dbc5c833121fe8e # v1.0.3
