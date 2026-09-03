@@ -38,6 +38,6 @@
   "overrides": {
     "@askalf/redstamp": "$@askalf/redstamp",
     "@hono/node-server": "^2.0.5",
-    "fast-uri": "^3.1.5"
+    "fast-uri": "^3.1.7"
   }
 }
