@@ -1,0 +1,68 @@
+# Path → label map for .github/workflows/pr-triage.yml (actions/labeler v7).
+#
+# Additive only: sync-labels is off, so nothing here ever strips a label a
+# human — or Dependabot — put on a PR by hand. Add a path, get a label.
+#
+# Bare-noun labels, matching the Own Your Stack family vocabulary (redstamp is
+# the reference), so a reader moving between repos sees the same words.
+
+mcp:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'mcp.mjs'
+          - 'mcp-manifest.json'
+
+cli:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'bin/**'
+
+audit:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'audit-trail.mjs'
+
+examples:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'demo/**'
+          - 'demo.mjs'
+
+support:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'support/**'
+
+lockfile:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'truecopy.lock'
+
+tests:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'test/**'
+          - '**/*.test.mjs'
+
+fuzz:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'fuzz/**'
+          - '.clusterfuzzlite/**'
+
+github_actions:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/workflows/**'
+          - '.github/labeler.yml'
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'README.md'
+          - 'CONTRIBUTING.md'
+          - 'CODE_OF_CONDUCT.md'
+          - 'SECURITY.md'
+          - '.github/ISSUE_TEMPLATE/**'
+          - '.github/pull_request_template.md'
+
