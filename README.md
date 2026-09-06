@@ -23,7 +23,7 @@ OpenClaw became 2026's first big AI-security disaster three ways at once: one-cl
 
 The three answer OpenClaw's three failures and **compose in-path** into a single guarded tool call (below).
 
-They aren't three islands — they share one spine: truecopy reuses redstamp's scanner, and strongroom reuses redstamp's tamper-evident audit. `npm install` dedupes redstamp to a single shared copy. All three are **pinned to vetted commits**, so the stack is itself a reproducible supply chain — the thing it's protecting.
+They aren't three islands — they share one spine: truecopy reuses redstamp's scanner, and strongroom reuses redstamp's tamper-evident audit. `npm install` dedupes redstamp to a single shared copy. redstamp and truecopy are **pinned to vetted commits** and strongroom to a published npm release, so the stack is itself a reproducible supply chain — the thing it's protecting. The strongroom repo was archived on 2026-09-06; its lease pattern continues inside this stack via the published `@askalf/strongroom` npm package.
 
 ## The tool-call path — three layers, one guarded call
 

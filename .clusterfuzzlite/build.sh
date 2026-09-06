@@ -3,7 +3,8 @@
 #
 # Unlike the individual tools (redstamp/truecopy/strongroom are zero-dependency),
 # this repo is the COMPOSITION layer: the fuzz targets import the composed gate,
-# which pulls the three @askalf/* packages (git-hosted, pinned) plus the MCP SDK.
+# which pulls the three @askalf/* packages (redstamp/truecopy git-pinned,
+# strongroom from npm since its repo was archived) plus the MCP SDK.
 # So the fuzz build installs the project's own runtime deps first, then merges the
 # fuzz-only Jazzer.js on top — Jazzer is never added to the project manifest.
 #
@@ -20,7 +21,7 @@ git config --global --add url."https://github.com/".insteadOf "ssh://git@github.
 git config --global --add url."https://github.com/".insteadOf "git@github.com:"
 
 # 1. project runtime deps — npm ci verifies every integrity hash in the committed
-#    root lockfile (the @askalf/* deps are git-pinned there; the MCP SDK is on npm).
+#    root lockfile (redstamp/truecopy are git-pinned there; strongroom and the MCP SDK are on npm).
 npm ci --no-audit --no-fund
 
 # 2. fuzz-only Jazzer.js, hash-pinned by .clusterfuzzlite/package-lock.json, merged
