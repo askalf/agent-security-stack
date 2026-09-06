@@ -24,7 +24,9 @@ reproduction where possible.
   their own repos — [redstamp](https://github.com/askalf/redstamp/security/policy)
   (runtime firewall), [truecopy](https://github.com/askalf/truecopy/security/policy)
   (supply-chain gate), [strongroom](https://github.com/askalf/strongroom/security/policy)
-  (secrets). Each has its own threat model.
+  (secrets). Each has its own threat model. The strongroom repo was archived
+  on 2026-09-06; its lease pattern continues inside this stack via the
+  `@askalf/strongroom` npm package, so report strongroom issues here.
 
 ## Supported versions
 
